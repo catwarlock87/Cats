@@ -2,7 +2,14 @@ from tkinter import *
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
+from  tkinter import ttk
 # import certifi
+
+
+allowed_tegs = ['sleep', 'jump',
+                'fight', 'black',
+                'white', 'orange',
+                'siamese', 'cute']
 
 
 def load_image(url):
@@ -19,7 +26,7 @@ def load_image(url):
 
 
 def open_new_window():
-    teg = teg_entry.get()
+    teg = teg_combobox.get()
     url_teg = f"https://cataas.com/cat/{teg}" if teg else "https://cataas.com/cat"
 
     img = load_image(url_teg)
@@ -41,12 +48,6 @@ window = Tk()
 window.title("Cats!")
 window.geometry('600x520')
 
-teg_entry = Entry()
-teg_entry.pack()
-
-load_button = Button(text="Загрузить по тегу", command=open_new_window)
-load_button.pack()
-
 mainmanu = Menu(window)
 window.config(menu=mainmanu)
 
@@ -56,7 +57,15 @@ filemenu.add_separator()
 filemenu.add_command(label="Выход", command=quit)
 mainmanu.add_cascade(label="Файл", menu=filemenu)
 
-
 url = "https://cataas.com/cat"
+
+label_teg = Label(text="Выбери тег")
+label_teg.pack()
+
+teg_combobox = ttk.Combobox(values=allowed_tegs)
+teg_combobox.pack()
+
+load_button = Button(text="Загрузить по тегу", command=open_new_window)
+load_button.pack()
 
 window.mainloop()
